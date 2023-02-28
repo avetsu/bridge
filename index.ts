@@ -205,23 +205,6 @@ const lastUserId = handler({
 
 const minesweeper = handler({
   body: z.object({
-    player: z.number(),
-    board: z.string(),
-  }),
-  resolve: async ({ body }) => {
-    const [insert] = await promisePool.query(
-      "INSERT INTO `minesweeper` (player, board) VALUES('" +
-        body.player +
-        "','" +
-        body.board +
-        "')"
-    );
-    return { success: "Board Updated Successfully!" };
-  },
-});
-
-const minesweeper = handler({
-  body: z.object({
     board: z.string(),
   }),
   resolve: async ({ body }) => {
