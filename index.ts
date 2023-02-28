@@ -220,12 +220,36 @@ const minesweeper = handler({
   },
 });
 
-const currentPlayer = handler({
+const minesweeper = handler({
+  body: z.object({
+    board: z.string(),
+  }),
+  resolve: async ({ body }) => {
+    const [insert] = await promisePool.query(
+      "INSERT INTO `minesweeper` (player, board) VALUES('" + body.board + "')"
+    );
+    return { success: "Board Updated Successfully!" };
+  },
+});
+
+const lastPlayer = handler({
   resolve: async (p) => {
     const [rows] = await promisePool.query(
       "SELECT (player) FROM `minesweeper` ORDER BY board_ID DESC LIMIT 1"
     );
     return rows[0];
+  },
+});
+
+const setLastPlayer = handler({
+  body: z.object({
+    player: z.number(),
+  }),
+  resolve: async ({ body }) => {
+    const [insert] = await promisePool.query(
+      "UPDATE `minesweeper` SET board = " + body.player + " WHERE board_ID = 1"
+    );
+    return { success: "Last Player Updated Successfully!" };
   },
 });
 
@@ -245,7 +269,8 @@ const routes = {
   lastid: method({ GET: lastId }),
   lastuserid: method({ GET: lastUserId }),
   minesweeper: method({ POST: minesweeper }),
-  currentplayer: method({ GET: currentPlayer }),
+  lastplayer: method({ GET: lastPlayer }),
+  setlastplayer: method({ POST: setLastPlayer }),
 };
 
 // It is also possible to use HTTP Server
