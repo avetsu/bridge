@@ -17,16 +17,16 @@ const mysql = require("mysql2");
 if (!process.env.PORT) dotenv.config({ path: path.join(".env") });
 
 const api = {
-  port: process.env.PORT,
-  projectName: process.env.projectName,
-  serverUrl: process.env.SERVER_URL,
-  dbPassword: process.env.PASSWORD,
+  port: 8080,
+  projectName: ",
+  serverUrl: "http://localhost:8080",
+  dbPassword: "Lamia2612",
 };
 
 const pool = mysql.createPool({
   host: "sql926.main-hosting.eu",
   user: "u432861292_zehralouis",
-  password: api.dbPassword,
+  password: "Lamia2612",
   database: "u432861292_loura",
 });
 
