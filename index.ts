@@ -245,6 +245,27 @@ const getLastBoard = handler({
   },
 });
 
+const setStarterPlayer = handler({
+  body: z.object({
+    player: z.string(),
+  }),
+  resolve: async ({ body }) => {
+    const [insert] = await promisePool.query(
+      "UPDATE `minesweeper` SET board = " + body.player + " WHERE board_ID = 2"
+    );
+    return { success: "Starter Player Updated Successfully!" };
+  },
+});
+
+const starterPlayer = handler({
+  resolve: async (p) => {
+    const [rows] = await promisePool.query(
+      "SELECT (board) FROM `minesweeper` WHERE board_ID = 2"
+    );
+    return rows[0];
+  },
+});
+
 // You can have multiple endpoints for the same route with different methods with the method function
 const routes = {
   users: method({ GET: users }),
@@ -264,6 +285,8 @@ const routes = {
   lastplayer: method({ GET: lastPlayer }),
   setlastplayer: method({ POST: setLastPlayer }),
   getlastboard: method({ GET: getLastBoard }),
+  setstarterplayer: method({ POST: setStarterPlayer }),
+  starterplayer: method({ GET: starterPlayer }),
 };
 
 // It is also possible to use HTTP Server
