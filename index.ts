@@ -18,7 +18,7 @@ if (!process.env.PORT) dotenv.config({ path: path.join(".env") });
 
 const api = {
   port: 8080,
-  projectName: ",
+  projectName: "sever",
   serverUrl: "http://localhost:8080",
   dbPassword: "Lamia2612",
 };
