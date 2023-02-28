@@ -218,7 +218,7 @@ const minesweeper = handler({
 const lastPlayer = handler({
   resolve: async (p) => {
     const [rows] = await promisePool.query(
-      "SELECT (player) FROM `minesweeper` ORDER BY board_ID DESC LIMIT 1"
+      "SELECT (board) FROM `minesweeper` ORDER BY board_ID DESC LIMIT 1"
     );
     return rows[0];
   },
