@@ -203,6 +203,32 @@ const lastUserId = handler({
   },
 });
 
+const minesweeper = handler({
+  body: z.object({
+    player: z.number(),
+    board: z.string(),
+  }),
+  resolve: async ({ body }) => {
+    const [insert] = await promisePool.query(
+      "INSERT INTO `minesweeper` (player, board) VALUES('" +
+        body.player +
+        "','" +
+        body.board +
+        "')"
+    );
+    return { success: "Board Updated Successfully!" };
+  },
+});
+
+const currentPlayer = handler({
+  resolve: async (p) => {
+    const [rows] = await promisePool.query(
+      "SELECT (player) FROM `minesweeper` ORDER BY board_ID DESC LIMIT 1"
+    );
+    return rows[0];
+  },
+});
+
 // You can have multiple endpoints for the same route with different methods with the method function
 const routes = {
   users: method({ GET: users }),
@@ -218,6 +244,8 @@ const routes = {
   addtest: method({ POST: addTest }),
   lastid: method({ GET: lastId }),
   lastuserid: method({ GET: lastUserId }),
+  minesweeper: method({ POST: minesweeper }),
+  currentplayer: method({ GET: currentPlayer }),
 };
 
 // It is also possible to use HTTP Server
