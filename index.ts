@@ -236,6 +236,15 @@ const setLastPlayer = handler({
   },
 });
 
+const getLastBoard = handler({
+  resolve: async (p) => {
+    const [rows] = await promisePool.query(
+      "SELECT (board) FROM `minesweeper` ORDER BY board_ID DESC LIMIT 1"
+    );
+    return rows[0];
+  },
+});
+
 // You can have multiple endpoints for the same route with different methods with the method function
 const routes = {
   users: method({ GET: users }),
@@ -254,6 +263,7 @@ const routes = {
   minesweeper: method({ POST: minesweeper }),
   lastplayer: method({ GET: lastPlayer }),
   setlastplayer: method({ POST: setLastPlayer }),
+  getlastboard: method({ GET: getLastBoard }),
 };
 
 // It is also possible to use HTTP Server
