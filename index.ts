@@ -226,7 +226,7 @@ const lastPlayer = handler({
 
 const setLastPlayer = handler({
   body: z.object({
-    player: z.number(),
+    player: z.string(),
   }),
   resolve: async ({ body }) => {
     const [insert] = await promisePool.query(
