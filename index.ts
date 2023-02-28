@@ -209,7 +209,7 @@ const minesweeper = handler({
   }),
   resolve: async ({ body }) => {
     const [insert] = await promisePool.query(
-      "INSERT INTO `minesweeper` (player, board) VALUES('" + body.board + "')"
+      "INSERT INTO `minesweeper` (board) VALUES('" + body.board + "')"
     );
     return { success: "Board Updated Successfully!" };
   },
