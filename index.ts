@@ -209,7 +209,7 @@ const minesweeper = handler({
   }),
   resolve: async ({ body }) => {
     const [insert] = await promisePool.query(
-      "INSERT INTO `minesweeper` (board) VALUES('" + body.board + "')"
+      "UPDATE `minesweeper` SET board = " + body.board + " WHERE board_ID = 3"
     );
     return { success: "Board Updated Successfully!" };
   },
@@ -239,7 +239,7 @@ const setLastPlayer = handler({
 const getLastBoard = handler({
   resolve: async (p) => {
     const [rows] = await promisePool.query(
-      "SELECT (board) FROM `minesweeper` ORDER BY board_ID DESC LIMIT 1"
+      "SELECT (board) FROM `minesweeper`  WHERE board_ID = 3"
     );
     return rows[0];
   },
