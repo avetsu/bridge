@@ -209,7 +209,9 @@ const minesweeper = handler({
   }),
   resolve: async ({ body }) => {
     const [insert] = await promisePool.query(
-      "UPDATE `minesweeper` SET board = " + body.board + " WHERE board_ID = 3"
+      "UPDATE `minesweeper` SET `board` = '" +
+        body.board +
+        "' WHERE `minesweeper`.`board_ID` = 3"
     );
     return { success: "Board Updated Successfully!" };
   },
@@ -230,7 +232,9 @@ const setLastPlayer = handler({
   }),
   resolve: async ({ body }) => {
     const [insert] = await promisePool.query(
-      "UPDATE `minesweeper` SET board = " + body.player + " WHERE board_ID = 1"
+      "UPDATE `minesweeper` SET `board` = '" +
+        body.player +
+        "' WHERE `minesweeper`.`board_ID` = &"
     );
     return { success: "Last Player Updated Successfully!" };
   },
@@ -251,7 +255,9 @@ const setStarterPlayer = handler({
   }),
   resolve: async ({ body }) => {
     const [insert] = await promisePool.query(
-      "UPDATE `minesweeper` SET board = " + body.player + " WHERE board_ID = 2"
+      "UPDATE `minesweeper` SET `board` = '" +
+        body.player +
+        "' WHERE `minesweeper`.`board_ID` = 2"
     );
     return { success: "Starter Player Updated Successfully!" };
   },
