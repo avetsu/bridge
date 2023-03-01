@@ -234,7 +234,7 @@ const setLastPlayer = handler({
     const [insert] = await promisePool.query(
       "UPDATE `minesweeper` SET `board` = '" +
         body.player +
-        "' WHERE `minesweeper`.`board_ID` = &"
+        "' WHERE `minesweeper`.`board_ID` = 1"
     );
     return { success: "Last Player Updated Successfully!" };
   },
