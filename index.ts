@@ -272,6 +272,61 @@ const starterPlayer = handler({
   },
 });
 
+
+const addDay = handler({
+  body: z.object({
+    date: z.string(),
+    user: z.number(),
+  }),
+  resolve: async ({ body }) => {
+    const [insert] = await promisePool.query(
+      "INSERT INTO `days` (date, user) VALUES ('" +
+        body.date +
+        "','" +
+        body.user +
+        "')"
+    );
+    return { success: "New Day Added Successfully!" };
+  },
+});
+
+const updateDay = handler({
+  body: z.object({
+    schedule: z.string(),
+    date: z.string(),
+    user: z.number(),
+  }),
+  resolve: async ({ body }) => {
+    const [insert] = await promisePool.query(
+      "UPDATE `days` SET `schedule` = '" +
+        body.schedule +
+        "' WHERE `days`.`date` = '" +
+        body.date +
+        "' AND `days`.`user` = " +
+        body.user +
+        ";"
+    );
+    return { success: "Daily Schedule Updated Successfully!" };
+  },
+});
+
+const getDay = handler({
+  body: z.object({
+    date: z.string(),
+    user: z.number(),
+  }),
+  resolve: async ({ body }) => {
+    const [rows] = await promisePool.query(
+      "SELECT * FROM `days` WHERE `days`.`date` = '" +
+        body.date +
+        "' AND `days`.`user` = " +
+        body.user +
+        ";"
+    );
+    return rows[0];
+  },
+});
+
 // You can have multiple endpoints for the same route with different methods with the method function
 const routes = {
   users: method({ GET: users }),
@@ -293,6 +348,9 @@ const routes = {
   getlastboard: method({ GET: getLastBoard }),
   setstarterplayer: method({ POST: setStarterPlayer }),
   starterplayer: method({ GET: starterPlayer }),
+  addday: method({ POST: addDay }),
+  updateday: method({ POST: updateDay }),
+  getday: method({ POST: getDay }),
 };
 
 // It is also possible to use HTTP Server
