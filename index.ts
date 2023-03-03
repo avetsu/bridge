@@ -317,7 +317,7 @@ const getDay = handler({
   }),
   resolve: async ({ body }) => {
     const [rows] = await promisePool.query(
-      "SELECT * FROM `days` WHERE `days`.`date` = '" +
+      "SELECT schedule FROM `days` WHERE `days`.`date` = '" +
         body.date +
         "' AND `days`.`user` = " +
         body.user +
