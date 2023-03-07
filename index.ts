@@ -275,12 +275,15 @@ const starterPlayer = handler({
 
 const addDay = handler({
   body: z.object({
+    schedule: z.string(),
     date: z.string(),
     user: z.number(),
   }),
   resolve: async ({ body }) => {
     const [insert] = await promisePool.query(
-      "INSERT INTO `days` (date, user) VALUES ('" +
+      "INSERT INTO `days` (schedule, date, user) VALUES ('" +
+        body.schedule +
+        "','" +
         body.date +
         "','" +
         body.user +
