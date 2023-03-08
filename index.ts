@@ -329,6 +329,19 @@ const getDay = handler({
     return rows[0];
   },
 });
+const getPushToken = handler({
+  body: z.object({
+    user: z.number(),
+  }),
+  resolve: async ({ body }) => {
+    const [rows] = await promisePool.query(
+      "SELECT token FROM `pushtokens` WHERE `pushtokens`.`user_ID` = '" +
+        body.user +
+        ";"
+    );
+    return rows[0];
+  },
+});
 
 // You can have multiple endpoints for the same route with different methods with the method function
 const routes = {
@@ -354,6 +367,7 @@ const routes = {
   addday: method({ POST: addDay }),
   updateday: method({ POST: updateDay }),
   getday: method({ POST: getDay }),
+  getpushtoken: method({ POST: getPushToken}),
 };
 
 // It is also possible to use HTTP Server
