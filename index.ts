@@ -335,7 +335,7 @@ const getPushToken = handler({
   }),
   resolve: async ({ body }) => {
     const [rows] = await promisePool.query(
-      "SELECT token FROM `pushtokens` WHERE `pushtokens`.`user_ID` = '" +
+      "SELECT token FROM `pushtokens` WHERE `pushtokens`.`user_ID` = " +
         body.user +
         ";"
     );
